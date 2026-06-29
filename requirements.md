@@ -8,13 +8,16 @@ A Python desktop tool for visualizing crazyflie log files (CSV format). The user
 
 ## Implementation and design requirements
 
-- **GUI framework:** PySide6
-- **Plotting:** matplotlib
-- **Data handling:** pandas
-
 Code should be well modularized and maintainable.
 
+Code should be based on well-maintained and stable external modules.
+
 The main python script should be called `logplotter.py`. This file should be placed in the root folder. All other python files should be placed in subfolders.
+
+## Performance
+
+- Signal selection changes must feel responsive: There should be no perceptible lag between a checkbox interaction and the UI acknowledging it, even when many signals are selected.
+
 
 ---
 
@@ -79,7 +82,7 @@ The three subframes in the left panel are stacked vertically and each divider be
 **Location:** Top of left panel.
 
 **Controls:**
-- **"Add Files…" button** — opens a file dialog in multi-file mode, filtering for `*.csv`. Each invocation can target a different directory.
+- **"Add Files…" button** — opens a file dialog in multi-file mode, filtering for `*.csv`. Each invocation can target a different directory. The file picker should default to the Crazyflie client's directory for storing log files (~/.config/cfclient/logdata).
 - **"Remove file" button** - remove file from file list. Removes signals from signal picker and plots.
 - **"Clear All" button** — removes all loaded files, resets the signal picker and plots.
 - **File list** — shows the base filename of each loaded file. Hovering shows the full path. Files are listed in the order they were added. Adding a file that is already loaded is silently ignored.
@@ -127,7 +130,7 @@ The three subframes in the left panel are stacked vertically and each divider be
 
 | Setting | Type | Default | Description |
 |---|---|---|---|
-| Start time from zero | Checkbox | On | If on, subtract the global minimum timestamp (across all loaded files) from all time values before plotting, so t=0 is the earliest data point in any file. |
+| Start time from zero | Checkbox | On | If on, subtract the minimum timestamp across all plotted signals from all time values before plotting, so t=0 is the earliest data point in any plot. |
 | Link X axes | Checkbox | On | If on, all subplots share the same x-axis; panning or zooming one plot updates all others. |
 | Grid | Checkbox | On | Show grid lines. |
 
@@ -172,10 +175,4 @@ The three subframes in the left panel are stacked vertically and each divider be
 
 ## Dependencies
 
-```
-PySide6>=6.4
-matplotlib>=3.7
-pandas>=2.0
-```
-
-A `requirements.txt` file should be included with these.
+A `requirements.txt` file should be created with project module dependencies, according to Python best practice.
